@@ -1,0 +1,152 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Topic</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="/static1/css/layout.css" >
+    <link rel="stylesheet" href="/static1/css/topic.css" >
+
+</head>
+
+
+<body>
+<div th:replace="users/Layout/header :: header">
+</div>
+<main>
+    <div class="left">
+        <h2 class="title">Dictionary</h2>
+        <div class="dictionary">
+            <div class="searchbar">
+                <ion-icon name="volume-medium-outline"></ion-icon>
+                <input
+                        type="text"
+                        class="searchTerm"
+                        placeholder="Try something like 'cat'"
+                        onchange="lookUp()"
+                />
+            </div>
+            <div class="result">
+                <div class="word">
+                    <h2 class="wordName" id="wordName"></h2>
+                </div>
+                <div class="phonetics" id="phonetics"></div>
+                <div class="meaning">
+                    <div class="meaningPara" id="meaningPara"></div>
+                    <div class="syno-anto">
+                        <div class="synonyms">
+                            <div class="synonym-th">synonyms</div>
+                            <div class="synonym-datas" id="synonym-datas"></div>
+                        </div>
+                        <div class="antonyms">
+                            <div class="antonym-th">antonyms</div>
+                            <div class="antonym-datas" id="antonym-datas"></div>
+                        </div>
+                    </div>
+                    <div class="syno-anto-array" id="syno-anto-array"></div>
+                </div>
+            </div>
+            
+        
+            <script src="/static1/js/dictionary.js"></script>
+        </div>
+    </div>
+    <div class="content">
+        <h1>select your topic</h1>
+        <ul class="list-item">
+            <li id="list-item" th:each="list : ${listTopic}">
+                <div class="topic-item" >
+                    <div class="item">
+                        <div class="front">
+                            <div class="item-img"><img th:src="${list.img}" ></div>
+                            <div class="body-item">
+                                <h3 id="choose-title" th:text="${list.nameTopic}"> </h3>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <div class="details" id="choose-desc">
+                                <p th:text="${list.description}"></p>
+                                <div class="play-btn">
+                                    <button th:onclick="'selectGame('+${list.topicID}+');'" name="btn-game" class="play-game" >Play</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="right">
+        <div class="line-left"></div>
+        <div>content</div>
+    </div>
+    <div id="model-container" >
+        <div id="model">
+            <div class="model-header">
+                <h2>Choose Your Game</h2>
+                <button id="btn-close">&#10550;</button>
+            </div>
+            <div class="model-body">
+                <div class="type-game" th:each="game: ${listGame}">
+                    <button type="button" th:onclick="'playGame('+${game.gameID}+');'" >
+                        <div class="img-game">
+                            <img alt="img game" th:src="${game.img}">
+                        </div>
+                        <div class="game-rule" th:text="${game.nameGame}"></div>
+                        <div class="game-desc" th:text="${game.description}"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="topicId" name="topicId" />
+    <input type="hidden" id="gameId"  name="gameId" />
+
+    <script th:inline="javascript">
+        function selectGame(id){
+            const btn_close = document.getElementById('btn-close');
+            const model_container = document.getElementById('model-container');
+            // sessionStorage.setItem("id",id);
+            document.getElementById("topicId").value = id;
+
+            model_container.classList.add('show');
+
+            btn_close.addEventListener('click', ()=>{
+                model_container.classList.remove('show');
+                sessionStorage.removeItem("id");
+            })
+
+        }
+
+        function playGame(gameId) {
+
+            var topicId = document.getElementById("topicId").value;
+
+            var url = location.origin + "/topic/game?topicId=" + topicId + "&gameId=" + gameId;
+
+            location.assign(url);
+        }
+
+    </script>
+</main>
+<footer th:replace="users/Layout/footer :: footer"></footer>
+
+<script>
+    document.getElementById("avatar").onclick = function () {
+        if(document.getElementById("setting").style.display === "none") {
+            document.getElementById("setting").style.display = "block";
+        } else {
+            document.getElementById("setting").style.display = "none";
+        }
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,451 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>IPA</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+            integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/static1/css/layout.css" >
+    <link rel="stylesheet" href="/static1/css/topic.css" >
+
+</head>
+
+
+<body>
+<div th:replace="users/Layout/header :: header">
+</div>
+<main>
+    <div class="left">
+        <h2 class="title">Dictionary</h2>
+        <div class="dictionary" th:replace="users/Layout/dictionary::dictionary">
+        </div>
+    </div>
+    <div class = "ipa">
+        <h1 id="title">International Phonetic Alphabet</h1>
+        <ul id="IPA"></ul>
+    </div>
+
+</main>
+<div th:replace="users/Layout/footer::footer">
+</div>
+<script>
+    const datas = [
+        {
+            type: "Short Vowels",
+            ipas: [
+                {
+                    ipa:"e",
+                    audio:"",
+                    samples:[
+                        "Went",
+                        "intend",
+                        "send",
+                        "letter"
+                    ]
+                },
+                {
+                    ipa:"æ",
+                    audio:"",
+                    samples:[
+                        "Cat", "hand", "nap", "flat", "have"
+                    ]
+                },
+                {
+                    ipa:"ʌ",
+                    audio:"",
+                    samples:[
+                        "Fun", "love", "money", "one", "London", "come"
+                    ]
+                },
+                {
+                    ipa:"ʊ",
+                    audio:"",
+                    samples:[
+                        "Put", "look", "should", "cook", "book", "look"
+                    ]
+                },
+                {
+                    ipa:"ɒ",
+                    audio:"",
+                    samples:[
+                        "Rob", "top", "watch", "squat", "sausage"
+                    ]
+                },
+                {
+                    ipa:"ə",
+                    audio:"",
+                    samples:[
+                        "Alive", "again", "mother"
+                    ]
+                },
+            ]
+        },
+        {
+            type: "Long Vowels",
+            ipas: [
+                {
+                    ipa:"i:",
+                    audio:"",
+                    samples:[
+                        "Need", "beat", "team"
+                    ]
+                },
+                {
+                    ipa:"ɜ:",
+                    audio:"",
+                    samples:[
+                        "Nurse", "heard", "third", "turn"
+                    ]
+                },
+                {
+                    ipa:"ɔ:",
+                    audio:"",
+                    samples:[
+                        "Talk", "law", "bored", "yawn", "jaw"
+                    ]
+                },
+                {
+                    ipa:"u:",
+                    audio:"",
+                    samples:[
+                        "Few", "boot", "lose", "gloomy", "fruit", "chew"
+                    ]
+                },
+                {
+                    ipa:"ɑ: ",
+                    audio:"",
+                    samples:[
+                        "Fast", "car", "hard", "bath"
+                    ]
+                },
+
+            ]
+        },
+        {
+            type: "Diphthong Vowels",
+            ipas: [
+                {
+                    ipa:"ɪə",
+                    audio:"",
+                    samples:[
+                        "Near", "ear", "clear", "tear", "beer", "fear"
+                    ]
+                },
+                {
+                    ipa:"eə",
+                    audio:"",
+                    samples:[
+                        "Hair", "there", "care", "stairs", "pear"
+                    ]
+                },
+                {
+                    ipa:"eɪ ",
+                    audio:"",
+                    samples:[
+                        "Face", "space", "rain", "case", "eight"
+                    ]
+                },
+                {
+                    ipa:"ɔɪ ",
+                    audio:"",
+                    samples:[
+                        "Joy", "employ", "toy", "coil", "oyster"
+                    ]
+                },
+                {
+                    ipa:"aɪ",
+                    audio:"",
+                    samples:[
+                        "My", "sight", "pride", "kind", "flight"
+                    ]
+                },
+                {
+                    ipa:"əʊ",
+                    audio:"",
+                    samples:[
+                        "No", "don’t", "stones", "alone", "hole"
+                    ]
+                },
+                {
+                    ipa:"aʊ",
+                    audio:"",
+                    samples:[
+                        "Mouth", "house", "brown", "cow", "out"
+                    ]
+                },
+
+            ]
+        },
+        {
+            type: "Consonants Sounds: Fricatives",
+            ipas: [
+                {
+                    ipa:"f",
+                    audio:"",
+                    samples:[
+                        "Full", "Friday", "fish", "knife"
+                    ]
+                },
+                {
+                    ipa:"v",
+                    audio:"",
+                    samples:[
+                        "Vest", "village", "view", "cave"
+                    ]
+                },
+                {
+                    ipa:"θ",
+                    audio:"",
+                    samples:[
+                        "Thought", "think", "Bath"
+                    ]
+                },
+                {
+                    ipa:"ð",
+                    audio:"",
+                    samples:[
+                        "There", "those", "brothers", "others"
+                    ]
+                },
+                {
+                    ipa:"z",
+                    audio:"",
+                    samples:[
+                        "Zoo", "crazy", "lazy", "zigzag", "nose"
+                    ]
+                },
+                {
+                    ipa:"ʃ",
+                    audio:"",
+                    samples:[
+                        "Shirt", "rush", "shop", "cash"
+                    ]
+                },
+                {
+                    ipa:"ʒ",
+                    audio:"",
+                    samples:[
+                        "Television", "delusion", "casual"
+                    ]
+                },
+                {
+                    ipa:"h",
+                    audio:"",
+                    samples:[
+                        "High", "help", "hello"
+                    ]
+                },
+            ]
+        },
+        {
+            type: "Consonants Sounds: Plosives",
+            ipas: [
+                {
+                    ipa:"p",
+                    audio:"",
+                    samples:[
+                        "Pin, cap, purpose, pause"
+                    ]
+                },
+                {
+                    ipa:"b",
+                    audio:"",
+                    samples:[
+                        "Bag, bubble, build, robe."
+                    ]
+                },
+                {
+                    ipa:"t",
+                    audio:"",
+                    samples:[
+                        "Time, train, tow, late."
+                    ]
+                },
+                {
+                    ipa:"d",
+                    audio:"",
+                    samples:[
+                        "Door, day, drive, down, feed."
+                    ]
+                },
+                {
+                    ipa:"k",
+                    audio:"",
+                    samples:[
+                        "Cash, quick, cricket, sock."
+                    ]
+                },
+                {
+                    ipa:"g",
+                    audio:"",
+                    samples:[
+                        "Girl, green, grass, flag."
+                    ]
+                },
+
+
+            ]
+        },
+        {
+            type: "Consonants Sounds: Affricates",
+            ipas: [
+                {
+                    ipa:"ʈʃ",
+                    audio:"",
+                    samples:[
+                        "Choose, cheese, church, watch"
+                    ]
+                },
+                {
+                    ipa:"dʒ",
+                    audio:"",
+                    samples:[
+                        "Joy, juggle, juice, stage."
+                    ]
+                },
+            ]
+        },
+        {
+            type: "Consonants Sounds: Affricates",
+            ipas: [
+                {
+                    ipa:"m",
+                    audio:"",
+                    samples:[
+                        "Room, mother, mad, more"
+                    ]
+                },
+                {
+                    ipa:"",
+                    audio:"",
+                    samples:[
+                        "Now, nobody, knew, turn"
+                    ]
+                },
+                {
+                    ipa:"ŋ",
+                    audio:"",
+                    samples:[
+                        "King, thing, song, swimming."
+                    ]
+                },
+            ]
+        },
+        {
+            type: "Consonants Sounds: Approximants",
+            ipas: [
+                {
+                    ipa:"r",
+                    audio:"",
+                    samples:[
+                        "Road, roses, river, ring, ride."
+                    ]
+                },
+                {
+                    ipa:"j",
+                    audio:"",
+                    samples:[
+                        "Yellow, usual, tune, yesterday, yard."
+                    ]
+                },
+                {
+                    ipa:"w",
+                    audio:"",
+                    samples:[
+                        "Wall, walk, wine, world."
+                    ]
+                },
+                {
+                    ipa:"l",
+                    audio:"",
+                    samples:[
+                        "Law, lots, leap, long, pill, cold, chill, melt."
+                    ]
+                },
+            ]
+        },
+    ]
+
+    let IPAdata = document.getElementById("IPA");
+    datas.forEach(data=>{
+        let listIPA = document.createElement("li");
+        listIPA.setAttribute("class", "listIPA")
+        let typeIPA = document.createElement("span");
+        typeIPA.setAttribute("class", "ipa type");
+        typeIPA.innerHTML = data.type;
+        listIPA.appendChild(typeIPA);
+        let ipaTable = document.createElement("table");
+        ipaTable.setAttribute("class", "table table-hover");
+        let ipaRowHead = document.createElement("tr");
+        let tableHead = ["IPA Symbol", "Listen", "Word Samples"];
+        tableHead.forEach(tbHead=>{
+            let head = document.createElement("th");
+            head.setAttribute("scrop","col");
+            head.innerHTML = tbHead;
+            ipaRowHead.appendChild(head);
+        })
+        ipaTable.appendChild(ipaRowHead);
+
+        data.ipas.forEach(ipa=>{
+            let ipaRow = document.createElement("tr");
+            ipaRow.setAttribute("class", "ipaRow");
+            let rowSymbol = document.createElement("td");
+            rowSymbol.innerHTML = ipa.ipa;
+            let rowAudio = document.createElement("td");
+            rowAudio.setAttribute("class", "audio");
+            let audioIcon = document.createElement("ion-icon");
+            audioIcon.setAttribute("name", "volume-medium-outline");
+            rowAudio.appendChild(audioIcon);
+            let rowSamples = document.createElement("td");
+            rowSamples.setAttribute("class","sample");
+            rowSamples.innerHTML = ipa.samples.join(",");
+            ipaRow.appendChild(rowSymbol);
+            ipaRow.appendChild(rowAudio);
+            ipaRow.appendChild(rowSamples);
+            ipaTable.appendChild(ipaRow);
+        })
+        listIPA.appendChild(ipaTable);
+        IPAdata.appendChild(listIPA);
+    })
+
+</script>
+<script
+        type="module"
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+        nomodule
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"
+></script>
+<script>
+    document.getElementById("avatar").onclick = function () {
+        if(document.getElementById("setting").style.display === "none") {
+            document.getElementById("setting").style.display = "block";
+        } else {
+            document.getElementById("setting").style.display = "none";
+        }
+    }
+</script>
+</body>
+
+</html>

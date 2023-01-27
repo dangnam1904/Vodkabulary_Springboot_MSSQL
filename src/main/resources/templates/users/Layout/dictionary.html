@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href = "@{/static/css/dictionary.css}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="dictionary" th:fragment="dictionary">
+    <div class="searchbar">
+        <ion-icon name="volume-medium-outline"></ion-icon>
+        <input
+                type="text"
+                class="searchTerm"
+                placeholder="Try something like 'cat'"
+                onchange="lookUp()"
+        />
+    </div>
+    <div class="result">
+        <div class="word">
+            <h2 class="wordName" id="wordName"></h2>
+        </div>
+        <div class="phonetics" id="phonetics"></div>
+        <div class="meaning">
+            <div class="meaningPara" id="meaningPara"></div>
+            <div class="syno-anto">
+                <div class="synonyms">
+                    <div class="synonym-th">synonyms</div>
+                    <div class="synonym-datas" id="synonym-datas"></div>
+                </div>
+                <div class="antonyms">
+                    <div class="antonym-th">antonyms</div>
+                    <div class="antonym-datas" id="antonym-datas"></div>
+                </div>
+            </div>
+            <div class="syno-anto-array" id="syno-anto-array"></div>
+        </div>
+    </div>
+    
+
+    <script th:src="@{/js/dictionary/dictionary.js}"></script>
+</div>
+</body>
+</html>

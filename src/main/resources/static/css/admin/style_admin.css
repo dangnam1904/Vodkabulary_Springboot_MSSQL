@@ -1,0 +1,89 @@
+
+button#btn-clickshowImg {
+    border: none;
+    cursor: pointer;
+}
+
+div#model-content {
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#model-content.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#model-content.show .model {
+    top: 200px;
+}
+
+div.model {
+    background: #ffffff;
+    max-width: 400px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.1s ease-in-out;
+}
+
+.model .model-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid;
+}
+
+.model .model-title h4 {
+    margin: 0;
+}
+
+.model .model-body {
+    padding: 15px 20px;
+    text-align: center;
+}
+
+button#btn-close {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 15px;
+}
+
+#img-show {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    text-align: center;
+}
+
+div.inline {
+    display: inline-block;
+    justify-content: space-between;
+}
+.form-add
+{
+    justify-content: space-between;
+    display: flex;
+}
+.mt-2, .my-2 {
+    margin-top: 6rem !important;
+    margin-left: 1.8rem;
+    position: absolute;
+    left: 6%;
+    width: 100%;
+}
+
+.mb-4, .my-4 {
+    margin-bottom: 0.5rem !important;
+}

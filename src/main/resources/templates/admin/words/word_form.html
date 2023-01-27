@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout/header:: header">
+
+    <meta charset="UTF-8">
+    <title>Word Management System</title>
+</head>
+<body>
+<div class="workPlace">
+    <div th:replace="admin/layout/header::header-title"></div>
+    <div th:replace="admin/layout/nav::nav"></div>
+    <div class="container1 my-2">
+        <h1>Word Management System</h1>
+        <hr>
+        <h2>[[${pageTitle}]]</h2>
+
+        <form action="#" th:action="@{/admin/word/save}" enctype="multipart/form-data" th:object="${word}"
+              method="POST">
+            <div class="form-group">
+                <label>Choose Topic</label>
+                <select class="form-control mb-4 col-4" id="topic" name="topic">
+                    <option value=""> --</option>
+                    <option th:each="topic : ${topiclist}"
+                            th:value="${topic.topicID}"
+                            th:text="${topic.nameTopic}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Choose type word</label>
+                <select class="form-control mb-4 col-4" name="type_word">
+                    <option value=""> --</option>
+                    <option th:each="type : ${typeword}"
+                            th:value="${type.typeID}"
+                            th:text="${type.nameType}"></option>
+                </select>
+            </div>
+            <input type="hidden" th:field="*{wordID}" name="word_id"
+                   placeholder="Enter the text english" class="form-control mb-4 col-4">
+            <div class="form-group">
+                <label>Text English</label>
+                <input type="text" th:field="*{text}"
+                       class="form-control mb-4 col-4" name="text" placeholder="Enter the text english">
+            </div>
+            <div class="form-group">
+                <label>Meaning</label>
+                <input type="text" th:field="*{meaning}"
+                       class="form-control mb-4 col-4" name="meaning" placeholder="Enter the text meaning">
+            </div>
+            <div class="form-group">
+                <label>Pronunciation</label>
+                <input type="text" th:field="*{pronunciation}" name="pronunciation"
+                       class="form-control mb-4 col-4" placeholder="Enter pronucition">
+            </div>
+
+            <div class="form-group">
+                <label>Text Example</label>
+                <input type="text" th:field="*{textexample}" name="pronunciation"
+                       class="form-control mb-4 col-4" placeholder="Enter pronucition">
+            </div>
+
+            <div class="form-group">
+                <label>Choose image</label>
+                <input type="file" name="image" accept=".png,.jpg,.jpeg,.bmp"
+                       class="form-control mb-4 col-4">
+            </div>
+            <div class="form-group">
+                <label>Choose sound</label>
+                <input type="file" name="sounds" accept=".mp3,.wma,.wav"
+                       class="form-control mb-4 col-4">
+            </div>
+
+            <button type="submit" class="btn btn-info col-2"> Save</button>
+        </form>
+        <hr>
+        <a th:href="@{/admin/word}"> Back to Word List</a>
+    </div>
+
+</div>
+<style>
+    .mt-2, .my-2 {
+        margin-top: 6rem !important;
+        margin-left: 1.8rem;
+    }
+    .mb-4, .my-4 {
+        margin-bottom: 0.5rem !important;
+    }
+</style>
+
+<footer th:replace="admin/layout/footer::footer">
+</footer>
+</body>
+</html>

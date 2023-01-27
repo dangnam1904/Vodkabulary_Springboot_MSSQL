@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout/header:: header">
+
+    <style>
+        .content .mb-2, .my-2{
+            position: relative;
+            width: auto;
+            height: auto;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #f2f2f2}
+    </style>
+</head>
+<body>
+<div class="workPlace">
+    <div th:replace="admin/layout/header::header-title"></div>
+    <div th:replace="admin/layout/nav::nav"></div>
+
+    <div class="container1 my-2">
+        <h1>Word Management System</h1>
+        <a th:href="@{/admin/word/addword}" class="btn btn-primary btn-sm mb-3"> Add Word </a>
+        <div class="form-inline" id="form-filter">
+            <form class="form-inline pull-left" id="form-filter-left" action="#"
+                  th:action="@{/admin/words}" method="GET">
+                <h6> Topic </h6>
+                <select id="topic" name="topic" class="select-fiter">
+                    <option value=""> --</option>
+                    <option th:each="topic : ${topiclist}"
+                            th:value="${topic.topicID}"
+                            th:text="${topic.nameTopic}"></option>
+                </select>
+
+                <h6> Type word </h6>
+                <div class="form-inline">
+                    <select class="select-fiter" name="type">
+                        <option value=""> --</option>
+                        <option th:each="type : ${typeword}"
+                                th:value="${type.typeID}"
+                                th:text="${type.nameType}"></option>
+                    </select>
+                    <input type="submit" id="submit-filter" value="Filter">
+                </div>
+            </form>
+            <form class="form-inline pull-right" action="#"
+                  th:action="@{/admin/words}" method="GET">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="s" th:value="${searchKey}"
+                           placeholder="Type text search..."/>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <span th:if="${messege}" class="alert alert-succes text-center" th:text="${message}"> </span>
+
+        <table border="1" class="table table-striped table-responsive-md" style="padding:0 10px;width: 100%;
+            height: 100%;">
+            <thead>
+            <th>STT</th>
+            <th> <a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=wordID&sortDir='+ ${reverseSortDir}}">
+                ID
+            </a></th>
+            <th>
+                <a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=text&sortDir='+ ${reverseSortDir}}">
+                    Text
+                </a>
+            </th>
+            <th><a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=pronunciation&sortDir='+ ${reverseSortDir}}">
+                Pronuncition
+            </a>
+            </th>
+            <th>
+                <a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=meaning&sortDir='+ ${reverseSortDir}}">
+                    Meaning
+                </a>
+            </th>
+            <th>
+                <a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=img&sortDir='+ ${reverseSortDir}}">
+                    Image
+                </a>
+            </th>
+            <th>
+                <a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=sound&sortDir='+ ${reverseSortDir}}">
+                    Sounds
+                </a>
+            </th>
+
+            <th >
+                <a th:href="@{'/admin/word/page/' + ${currentPage} +'?sortField=sound&sortDir='+ ${reverseSortDir}}">
+                    Text Example
+                </a>
+            </th>
+            <th>Topic id</th>
+            <th>
+                Type id
+            </th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+            <tr th:each="word,index :  ${listwords}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${word.wordID}"></td>
+                <td th:text="${word.text}"></td>
+                <td th:text="${word.pronunciation}"></td>
+                <td th:text="${word.meaning}"></td>
+                <td><img onclick="showimg(this);" th:src="@{${word.img}}" width="120px" height="auto"></td>
+                <td>
+                    <audio controls id="audio-word">
+                        <source th:src="@{${word.sound}}" type="audio/ogg">
+                    </audio>
+                </td>
+                <td th:text="${word.textexample}">
+                </td>
+                <td th:text="${word.topic.topicID}"></td>
+                <td th:text="${word.typeWord.typeID}"></td>
+                <td><a th:href="@{/admin/word/edit/{id}(id=${word.wordID})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/admin/word/delete/{id}(id=${word.wordID})}" class="btn btn-danger">Delete</a>
+                </td>
+                -
+            </tr>
+            </tbody>
+        </table>
+        <!--Pageing-->
+        <div>
+            <h5>Total items: [[${totalItem}]] - Current Page: [[${currentPage}]] of [[${totalPage}]]
+                <a th:if="${currentPage > 1}" th:href="@{'/admin/word/page/1'+'?sortField='+${sortField}+'&sortDir=desc'}">Fisrt</a>&nbsp;&nbsp;
+                <span th:unless="${currentPage > 1}">Fisrt</span>
+                <a th:if="${currentPage > 1}" th:href="@{'/admin/word/page/'+${currentPage - 1 } +'?sortField='+${sortField}+'&sortDir=desc'}">Preview</a>
+                <span th:unless="${currentPage > 1}">Preview</span>
+
+                <span th:each="i: ${#numbers.sequence(1,8)}">
+                <a th:if="${i != currentPage}" th:href="@{'/admin/word/page/' + ${i}  +'?sortField='+${sortField}+'&sortDir=desc'}">[[${i}]]</a> &nbsp;&nbsp;
+                <span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;&nbsp;
+            </span>
+                <a th:if="${currentPage < totalPage}" th:href="@{'/admin/word/page/'+ ${currentPage + 1} +'?sortField='+${sortField}+'&sortDir=desc'}">Next</a>
+                <span th:unless="${currentPage < totalPage}">Next</span> &nbsp;&nbsp;
+                <a th:if="${currentPage < totalPage}" th:href="@{'/admin/word/page/'+ ${totalPage} +'?sortField='+${sortField}+'&sortDir=desc'}">Last</a>&nbsp;&nbsp;
+                <span th:unless="${currentPage < totalPage}">Last</span>
+            </h5>
+        </div>
+
+        <!-- Pop up -->
+        <div id="model-content" class="">
+            <div class="model" id="model_1">
+                <div class="model-title">
+                    <h4> Image preview</h4>
+                    <button id="btn-close">X</button>
+                </div>
+                <div class="model-body">
+                    <img id="img-show" th:src="@{../img/plants.jpg}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    button#btn-clickshowImg {
+        border: none;
+        cursor: pointer;
+    }
+    .mt-2, .my-2 {
+        margin-top: 6rem!important;
+        margin-left: 1.5rem;
+    }
+
+    div#model-content {
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0px;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    #model-content.show {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    #model-content.show .model {
+        top: 200px;
+    }
+
+    div.model {
+        background: #ffffff;
+        max-width: 400px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 0.1s ease-in-out;
+    }
+
+    .model .model-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid;
+    }
+
+    .model .model-title h4 {
+        margin: 0;
+    }
+
+    .model .model-body {
+        padding: 15px 20px;
+        text-align: center;
+    }
+
+    button#btn-close {
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 15px;
+    }
+
+
+    #img-show {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    #form-filter {
+        justify-content: space-between;
+        font-size: 1rem;
+    }
+
+    #form-filter-left {
+        justify-content: space-between;
+    }
+
+    .select-fiter {
+        padding: 3px 2px;
+        margin: 0px 25px;
+        border: 2px #7ae5be solid;
+        border-radius: 4px;
+    }
+
+    #submit-filter {
+        background: #007bff;
+        border: #007bff;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        padding: 3px 2px;
+        margin-left: -16px;
+    }
+
+    audio:hover, audio:focus, audio:active {
+        -webkit-box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.4);
+        box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.4);
+        -webkit-transform: scale(1.05);
+        -moz-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+</style>
+<script type="text/javascript">
+    function showimg(eleImg) {
+        const btn_close = document.getElementById('btn-close');
+        const model_content = document.getElementById('model-content');
+        const model_1 = document.getElementById('model_1');
+        const tempImgShow = document.getElementById('img-show');
+
+        tempImgShow.src = eleImg.src;
+
+        model_content.classList.add('show');
+
+        btn_close.addEventListener('click', () => {
+            model_content.classList.remove('show');
+        })
+        model_content.addEventListener('click', (e) => {
+            if (!model_1.contains(e.target)) {
+                btn_close.click();
+            }
+        })
+    }
+</script>
+</div>
+
+<footer th:replace="admin/layout/footer::footer">
+</footer>
+</body>
+</html>

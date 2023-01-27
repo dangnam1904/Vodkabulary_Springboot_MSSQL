@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout/header:: header">
+    <meta charset="UTF-8">
+    <title>Topic Management System</title>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+    <script type="text/javascript"
+            th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js}"></script>
+</head>
+<body>
+<div class="workPlace">
+    <div th:replace="admin/layout/header::header-title"></div>
+    <div th:replace="admin/layout/nav::nav"></div>
+    <div class="container1 my-2">
+        <h1>Topic Management System</h1>
+        <hr>
+        <h2>[[${pageTitle}]]</h2>
+
+        <form action="#" th:action="@{/admin/topic/save}" enctype="multipart/form-data" th:object="${topic}"
+              method="POST" name="formTopic" id="formTopic">
+            <input type="hidden" name="topicid" th:field="*{topicID}" class="form-control mb-4 col-4">
+            <div class="form-group">
+                <label>Topic Name</label>
+                <input type="text" name="nametopic" th:field="*{nameTopic}" id="nameTopic" style="margin-bottom: 5px"
+                       required="required" class="form-control mb-4 col-4" placeholder="Enter name topic">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" name="decription" th:field="*{description}"
+                       class="form-control mb-4 col-4" placeholder="Enter decription">
+            </div>
+
+            <div class="form-group">
+                <label>Choose img</label>
+                <input type="file" name="imgae" accept=".jpg, .png"
+                       class="form-control mb-4 col-4">
+            </div>
+            <button type="submit" id="btnsm" onclick="validate_form()" class="btn btn-info col-2"> Save</button>
+        </form>
+        <hr>
+        <a th:href="@{/admin/topic}"> Back to topic List</a>
+    </div>
+
+    <script>
+        function validate_form(e) {
+            const nametopic = document.getElementById("nameTopic");
+            e.preventDefault();
+            let name = nametopic.value;
+            console.log(name);
+        }
+    </script>
+
+    <footer th:replace="admin/layout/footer::footer">
+    </footer>
+    <style>
+        .mt-2, .my-2 {
+            margin-top: 6rem !important;
+            margin-left: 1.8rem;
+        }
+
+        .mb-4, .my-4 {
+            margin-bottom: 0.5rem !important;
+        }
+    </style>
+</body>
+</html>

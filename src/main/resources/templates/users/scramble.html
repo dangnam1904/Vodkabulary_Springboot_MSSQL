@@ -1,0 +1,206 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Topic</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="/static1/css/layout.css" >
+    <link rel="stylesheet" href="/static1/css/topic.css" >
+
+</head>
+
+
+<body>
+        <div th:replace="users/Layout/header :: header">
+        </div>
+    <main>
+        <div class="left">
+            <h2 class="title">Dictionary</h2>
+            <div class="dictionary" th:replace="users/Layout/dictionary::dictionary">
+            </div>
+        </div>
+        <div class="content">
+            <div class="wrapper">
+                <div class="img-cate">
+<!--                    <img id="img-word" alt="image category">-->
+                </div>
+                <div id="buttons">
+                </div>
+                <div id="hold">
+                </div>
+                <p id="mylives"></p>
+                <div class="container">
+                    <button id="reset">Play again</button>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="line-left"></div>
+            <div>content</div>
+        </div>
+        
+    </main>
+        <div th:replace="users/Layout/footer::footer">
+        </div>
+
+    <script th:inline="javascript">
+        window.onload = function () {
+    
+            var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+                't', 'u', 'v', 'w', 'x', 'y', 'z'];
+            let random = [];
+    
+            var word;
+            var guess ;
+            var geusses = [ ];
+            var lives ;
+            var counter ;
+            var space;
+
+
+            // Get elements
+            var showLives = document.getElementById("mylives");
+            var getHint = document.getElementById("hint");
+
+    
+            // create alphabet ul
+            var buttons = function () {
+                myButtons = document.getElementById('buttons');
+                letters = document.createElement('ul');
+                let a = word.split('');
+                for (var i = 0; i < 5; i++){
+                    random[i] = alphabet[Math.floor(Math.random() * alphabet.length)]
+                }
+                random = [...a,...random];
+                random = random.sort(() => Math.random() -0.5);
+                console.log(random);
+                for (let i = 0; i < random.length; i++) {
+                    letters.id = 'alphabet';
+                    list = document.createElement('li');
+                    list.id = 'letter';
+                    list.innerHTML = random[i];
+                    check();
+                    myButtons.appendChild(letters);
+                    letters.appendChild(list);
+                }
+            }
+    
+            // Create geusses ul
+            result = function () {
+                wordHolder = document.getElementById('hold');
+                correct = document.createElement('ul');
+    
+                for (var i = 0; i < word.length; i++) {
+                    correct.setAttribute('id', 'my-word');
+                    guess = document.createElement('li');
+                    guess.setAttribute('class', 'guess');
+                    if (word[i] === "-") {
+                        guess.innerHTML = "-";
+                        space = 1;
+                    } else {
+                        guess.innerHTML = "_";
+                    }
+    
+                    geusses.push(guess);
+                    wordHolder.appendChild(correct);
+                    correct.appendChild(guess);
+                }
+            }
+    
+            // Show lives
+            comments = function () {
+                showLives.innerHTML = "You have " + lives + " lives";
+                if (lives < 1) {
+                    showLives.innerHTML = "Game Over";
+                }
+                for (var i = 0; i < geusses.length; i++) {
+                    if (counter + space === geusses.length) {
+                        showLives.innerHTML = "You Win!";
+                    }
+                }
+            }
+    
+    
+            // OnClick Function
+            check = function () {
+                list.onclick = function () {
+                    var geuss = (this.innerHTML);
+                    this.setAttribute("class", "active");
+                    this.onclick = null;
+                    for (var i = 0; i < word.length; i++) {
+                        if (word[i] === geuss) {
+                            geusses[i].innerHTML = geuss;
+                            counter += 1;
+                        }
+                    }
+                    var j = (word.indexOf(geuss));
+                    if (j === -1) {
+                        lives -= 1;
+                        comments();
+                    } else {
+                        comments();
+                    }
+                }
+            }
+    
+            // Play
+            play = function () {
+    
+                /*<![CDATA[*/
+                let myvalue = /*[[${listWord}]]*/ "listWord";
+                /*]]*/
+                // console.log(myvalue);
+                let chosenWord = myvalue[Math.floor(Math.random() * myvalue.length)];
+                console.log(chosenWord);
+                var categories = chosenWord.split(",");
+                word = categories[0];
+
+                img = document.createElement('img');
+                img.src = categories[3];
+                document.querySelector(".img-cate").appendChild(img);
+
+                word = word.replace(/\s/g, "-");
+                console.log(word);
+                buttons();
+    
+                geusses = [ ];
+                lives = 3;
+                counter = 0;
+                space = 0;
+                result();
+                comments();
+            }
+    
+            play();
+    
+    
+    
+            // Reset
+    
+            document.getElementById('reset').onclick = function() {
+                correct.parentNode.removeChild(correct);
+                letters.parentNode.removeChild(letters);
+                img.parentNode.removeChild(img);
+                random = [];
+                play();
+            }
+        }
+    
+    
+    
+    </script>
+</body>
+
+</html>

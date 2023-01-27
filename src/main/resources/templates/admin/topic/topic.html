@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout/header:: header">
+    <meta charset="UTF-8">
+    <title>Topic Management System</title>
+</head>
+
+<body>
+
+
+<div class="workPlace">
+    <div th:replace="admin/layout/header::header-title"></div>
+    <div th:replace="admin/layout/nav::nav"></div>
+    <div class="container1 my-2">
+        <h1>Word Management System</h1>
+        <div class="form-add">
+            <div class="inline">
+                <a th:href="@{/admin/topic/add}" class="btn btn-primary btn-sm mb-3"> Add Topic </a>
+            </div>
+            <div class="inline">
+                <form class="form-inline pull-right" action="#"
+                      th:action="@{/admin/topic}" method="GET">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="s" th:value="${searchKey}"
+                               placeholder="Type text search..."/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+        <div th:if="${messege}" class="alert alert-succes text-center">[[${messege}]]</div>
+        <table border="1" class="table table-striped table-responsive-md">
+            <thead>
+            <th>STT</th>
+            <th>Name Topic</th>
+            <th>Decription</th>
+            <th>Img</th>
+            </thead>
+            <tbody>
+            <tr th:each="topic, index :  ${topiclist}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${topic.nameTopic}"></td>
+                <td th:text="${topic.description}"></td>
+
+                <td><img onclick="showimg(this);" th:src="@{${topic.img}}" width="120px" height="auto">
+                </td>
+                <td><a th:href="@{/admin/topic/edit/{id}(id=${topic.topicID})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/admin/topic/delete/{id}(id=${topic.topicID})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Pop up -->
+        <div id="model-content" class="">
+            <div class="model" id="model_1">
+                <div class="model-title">
+                    <h4> Img preview</h4>
+                    <button id="btn-close">X</button>
+                </div>
+                <div class="model-body">
+                    <img id="img-show" th:src="@{../ImgAudio/plants.jpg}">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showimg(eleImg) {
+        const btn_close = document.getElementById('btn-close');
+        const model_content = document.getElementById('model-content');
+        const model_1 = document.getElementById('model_1');
+        const tempImgShow = document.getElementById('img-show');
+
+        tempImgShow.src = eleImg.src;
+
+        model_content.classList.add('show');
+
+        btn_close.addEventListener('click', () => {
+            model_content.classList.remove('show');
+        })
+        model_content.addEventListener('click', (e) => {
+            if (!model_1.contains(e.target)) {
+                btn_close.click();
+            }
+        })
+    }
+</script>
+
+<footer th:replace="admin/layout/footer::footer">
+</footer>
+
+</body>
+</html>

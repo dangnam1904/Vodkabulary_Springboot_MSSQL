@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/static1/css/layout.css}" rel="stylesheet">
+</head>
+<body class="text-center">
+<header class="header" >
+    <div th:fragment="header">
+        <nav class="nav">
+            <a th:href="@{/}">
+                <div class="nav__logo">
+                    <img class="logo__img" th:src="@{/img/logo.png}" alt="logo of website" />
+                </div>
+            </a>
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="linkto" th:href="@{/topic}">Topic</a>
+                </li>
+                <li class="nav__item"> <a class="linkto" th:href="@{/ipa}">IPA </a></li>
+                <li class="nav__item"> <a class="linkto" th:href="@{/test}">Test</a></li>
+                <li class="nav__item">
+                        <a th:href="@{/signin}" th:if="${user} == null">
+                            <button type="button" class="btn btn-info">Sign In</button>
+                        </a>
+                        <div th:if="${user} != null" class="wrapper">
+                            <div class="avatar__wrapper">
+                                <img class="avatar" th:src="${user.avatar}" id="avatar" alt="avatar of user" />
+                            </div>
+                            <div class="settinglist" style="display: none" id="setting">
+                                <a class="linkto" th:href="@{/profilepage}">
+                                <div class="settingitem" id="profilepage">Profile</div>
+                                </a>
+                                <a class="linkto" th:href="@{/profile}">
+                                    <div class="settingitem" id="word">My Words</div>
+                                </a>
+                                <a class="linkto" th:href="@{/logout}">
+                                    <div class="settingitem" id="logout">Logout</div>
+                                </a>
+                            </div>
+                        </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+</body>
+</html>

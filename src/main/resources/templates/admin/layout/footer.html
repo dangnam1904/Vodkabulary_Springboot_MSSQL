@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<footer th:fragment="footer">
+    <script th:src="@{/js./admin.js}"></script>
+    <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script>
+        let xVals = [];
+        for (let i = 1; i <= 31; i++) {
+            xVals.push(i);
+        }
+        var datasets = [
+            {
+                backgroundColor: "#a4a6b35a",
+                borderColor: "#47021a",
+                fill: true,
+                data: [],
+            },
+            {
+                backgroundColor: "#DFE0EB",
+                borderColor: "#DFE0EB",
+                fill: true,
+                data: [],
+            },
+        ];
+        datasets.forEach((data) => {
+            for (let i = 0; i < 31; i++) {
+                let max = 1000;
+                let min = 10000;
+                data.data.push(Math.floor(Math.random() * (max - min)) + min);
+            }
+        });
+        let theChart = new Chart("myChart active", {
+            type: "line",
+            data: {
+                labels: xVals,
+                datasets: datasets,
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "User Per Day",
+                },
+                legend: {
+                    display: false,
+                },
+            },
+        });
+    </script>
+</footer>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout/header:: header">
+    <meta charset="UTF-8">
+    <title>User Management System</title>
+</head>
+
+<body>
+<style>
+    button#btn-clickshowImg {
+        border: none;
+        cursor: pointer;
+    }
+
+    div#model-content {
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0px;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    #model-content.show {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    #model-content.show .model {
+        top: 200px;
+    }
+
+    div.model {
+        background: #ffffff;
+        max-width: 400px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: all 0.1s ease-in-out;
+    }
+
+    .model .model-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid;
+    }
+
+    .model .model-title h4 {
+        margin: 0;
+    }
+
+    .model .model-body {
+        padding: 15px 20px;
+        text-align: center;
+    }
+
+    button#btn-close {
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 15px;
+    }
+
+
+    #img-show {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+
+    table {
+        text-align: center;
+    }
+
+</style>
+
+<div class="workPlace">
+    <div th:replace="admin/layout/header::header-title"></div>
+    <div th:replace="admin/layout/nav::nav"></div>
+    <div class="container1 my-2">
+        <h1>User Management System</h1>
+        <a th:href="@{/admin/user/add}" class="btn btn-primary btn-sm mb-3"> Add User </a>
+
+        <form class="form-inline pull-left" id="form-filter-left" action="#"
+              th:action="@{/admin/user}" method="GET">
+            <h6> Roles </h6>
+            <select id="role" name="roles" class="select-fiter">
+                <option value=""> --</option>
+                <option th:each="r : ${listRole}"
+                        th:value="${r.role_ID}"
+                        th:text="${r.roleName}"></option>
+            </select>
+            <input type="submit" value="Filter">
+        </form>
+        <form class="form-inline pull-right" action="#"
+              th:action="@{/admin/user}" method="GET">
+            <div class="form-group">
+                <input type="text" class="form-control" name="s" th:value="${searchKey}"
+                       placeholder="Type text search..."/>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <div th:if="${messege}" class="alert alert-succes text-center">[[${messege}]]</div>
+        <table border="1" class="table table-striped table-responsive-md">
+            <thead>
+            <th>STT</th>
+            <th>ID</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Brithday</th>
+            <th>Image</th>
+            <th>Create Date</th>
+            <th>Time Update</th>
+            <th>Role</th>
+            </thead>
+            <tbody>
+            <tr th:each="u, index :  ${userList}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${u.userID}"></td>
+                <td th:text="${u.username}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.name}"></td>
+                <td th:text="${u.dob}"></td>
+                <td><img onclick="showimg(this);" th:src="@{${'../ImgAudio/'+u.image}}" width="120px" height="auto">
+                </td>
+                <td th:text="${u.createdate}"></td>
+                <td th:text="${u.updatetime}"></td>
+                <td th:text="${u.getRoles().role_ID}"></td>
+                <td><a th:href="@{/admin/user/edit/{id}(id=${u.userID})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/admin/user/delete/{id}(id=${u.userID})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Pop up -->
+        <div id="model-content" class="">
+            <div class="model" id="model_1">
+                <div class="model-title">
+                    <h4> Img preview</h4>
+                    <button id="btn-close">X</button>
+                </div>
+                <div class="model-body">
+                    <img id="img-show" th:src="@{../ImgAudio/plants.jpg}">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showimg(eleImg) {
+        const btn_close = document.getElementById('btn-close');
+        const model_content = document.getElementById('model-content');
+        const model_1 = document.getElementById('model_1');
+        const tempImgShow = document.getElementById('img-show');
+
+        tempImgShow.src = eleImg.src;
+
+        model_content.classList.add('show');
+
+        btn_close.addEventListener('click', () => {
+            model_content.classList.remove('show');
+        })
+        model_content.addEventListener('click', (e) => {
+            if (!model_1.contains(e.target)) {
+                btn_close.click();
+            }
+        })
+    }
+</script>
+
+<footer th:replace="admin/layout/footer::footer">
+</footer>
+
+<style>
+    .mt-2, .my-2 {
+        margin-top: 6rem !important;
+        margin-left: 1.8rem;
+    }
+
+    .mb-4, .my-4 {
+        margin-bottom: 0.5rem !important;
+    }
+</style>
+</body>
+</html>
