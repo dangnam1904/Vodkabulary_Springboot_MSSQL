@@ -1,12 +1,12 @@
 ﻿insert into roles(rolename) values
 ('admin'),('teacher'),('user')
 go
-
+-- $2a$12$JbbANG/3iPlRJnDlhe/N8.BiD37czo9NZslSg7yM2R.mrd5eg4mOC  plant mk 1
 insert into users(name,username,password,email,image,dob,point,role_id) values
-(N'Đặng Nam','dangnam','sdfsdf',N'dangnam13@gmail.com',N'img.png','2000-12-11',0,1),
-(N'Đặng Nam','nam1','sdfsd3f',N'dangnamyk@gmail.com',N'img.png','2000-12-11',0,2),
-(N'Đặng Nam','teacher','sdfs4df',N'dang1nayk@gmail.com',N'img.png','2000-12-11',0,3),
-(N'Usser','user','sdfsd6f',N'dangnam44yk@gmail.com',N'img.png','2000-12-11',0,3)
+(N'Đặng Nam','dangnam','$2a$12$JbbANG/3iPlRJnDlhe/N8.BiD37czo9NZslSg7yM2R.mrd5eg4mOC',N'dangnam13@gmail.com',N'img.png','2000-12-11',0,1),
+(N'Đặng Nam','nam1','$2a$12$JbbANG/3iPlRJnDlhe/N8.BiD37czo9NZslSg7yM2R.mrd5eg4mOC',N'dangnamyk@gmail.com',N'img.png','2000-12-11',0,2),
+(N'Đặng Nam','teacher','$2a$12$JbbANG/3iPlRJnDlhe/N8.BiD37czo9NZslSg7yM2R.mrd5eg4mOC',N'dang1nayk@gmail.com',N'img.png','2000-12-11',0,3),
+(N'Usser','user','$2a$12$JbbANG/3iPlRJnDlhe/N8.BiD37czo9NZslSg7yM2R.mrd5eg4mOC',N'dangnam44yk@gmail.com',N'img.png','2000-12-11',0,3)
 go
 
 INSERT into game(description,img,namegame) VALUES 
